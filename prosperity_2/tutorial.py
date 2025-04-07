@@ -1,5 +1,5 @@
 from typing import Dict, List
-from datamodel import OrderDepth, TradingState, Order
+from round_1.datamodel import OrderDepth, TradingState, Order
 import numpy as np
 
 #ISTRUZIONI PER IL BACKTESTING

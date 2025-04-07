@@ -25,7 +25,7 @@ class Trader:
         for product in state.order_depths.keys():
             # Check if the current product is the 'RAINFOREST_RESIN' product, only then run the order logic
             if product == 'RAINFOREST_RESIN':
-                N = 30
+                N = 100
                 
                 
                 # Retrieve the Order Depth containing all the market BUY and SELL orders for RAINFOREST_RESIN
