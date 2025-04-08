@@ -1,5 +1,5 @@
 from typing import Dict, List
-from round_1.datamodel import OrderDepth, TradingState, Order
+from datamodel import OrderDepth, TradingState, Order
 import numpy as np
 
 #ISTRUZIONI PER IL BACKTESTING
@@ -53,7 +53,7 @@ class Trader:
 
                 # Define a fair value for the PEARLS.
                 acceptable_price = ema_price
-
+à,
                 # If statement checks if there are any SELL orders in the RAINFOREST_RESINS market
                 if len(order_depth.sell_orders) > 0:
 
