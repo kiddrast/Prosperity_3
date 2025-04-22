@@ -7,7 +7,6 @@ import numpy as np
 #Per eseguire il backtesting del round 0, bisogna usare il comando "prosperity3bt tutorial.py 0" sempre sul terminale
 #L'output dovrebbe essere di un profitto di 3724
 
-
 class Trader:
     # define data members
     def __init__(self):
@@ -164,6 +163,10 @@ class Trader:
                 # Add all the above the orders to the result dict
                 result[product] = orders
                 
+
+
+##########################################################################################################################################
+                 
             elif product == 'SQUID_INK':
 
                 # Retrieve the Order Depth containing all the market BUY and SELL orders for KELP
@@ -182,9 +185,13 @@ class Trader:
                     best_ask_volume = order_depth.sell_orders[best_ask]
                     best_bid = max(order_depth.buy_orders.keys())
                     best_bid_volume = order_depth.buy_orders[best_bid]
-                    avg_buy_price = sum([np.abs(order_depth.buy_orders[i]) * i for i in order_depth.buy_orders.keys()])/sum([np.abs(order_depth.buy_orders[i]) for i in order_depth.buy_orders.keys()])
+
+
+                    avg_buy_price =  sum([np.abs(order_depth.buy_orders[i])  * i for i in order_depth.buy_orders.keys()])/sum([np.abs(order_depth.buy_orders[i]) for i in order_depth.buy_orders.keys()])
                     avg_sell_price = sum([np.abs(order_depth.sell_orders[i]) * i for i in order_depth.sell_orders.keys()])/sum([np.abs(order_depth.sell_orders[i]) for i in order_depth.sell_orders.keys()])
                     mid_price = (avg_sell_price + avg_buy_price)/2
+
+
                 else:
                     mid_price = self.last_mid_price[product]
                 self.last_mid_price[product] = mid_price
@@ -192,10 +199,10 @@ class Trader:
                 # Initialize the list of Orders to be sent as an empty list
                 orders: list[Order] = []
 
-                # Calculate the mid price of the PEARLS market
-                
-                if len(order_depth.sell_orders) > 0:
 
+
+                # Calculate the mid price of the PEARLS market
+                if len(order_depth.sell_orders) > 0:
                     # Sort all the available sell orders by their price,
                     # and select only the sell order with the lowest price
                     best_ask = min(order_depth.sell_orders.keys())
@@ -203,22 +210,12 @@ class Trader:
 
                     # Check if the lowest ask (sell order) is lower than the above defined fair value
                     if best_ask <= acceptable_price:
-
-                        # In case the lowest ask is lower than our fair value,
-                        # This presents an opportunity for us to buy cheaply
-                        # The code below therefore sends a BUY order at the price level of the ask,
-                        # with the same quantity
-                        # We expect this order to trade with the sell order
                         print("BUY", str(-best_ask_volume) + "x", best_ask)
                         orders.append(Order(product, best_ask, int(np.minimum(-best_ask_volume,legal_buy_vol))))
                     if best_ask - 1 >= acceptable_price:
                         print("SELL", str(-best_bid_volume) + "x", best_ask - 1)
                         orders.append(Order(product, best_ask - 1, int(np.minimum(-best_bid_volume,legal_sell_vol))))
 
-                # The below code block is similar to the one above,
-                # the difference is that it find the highest bid (buy order)
-                # If the price of the order is higher than the fair value
-                # This is an opportunity to sell at a premium
                 if len(order_depth.buy_orders) != 0:
                     best_bid = max(order_depth.buy_orders.keys())
                     best_bid_volume = order_depth.buy_orders[best_bid]
@@ -229,9 +226,14 @@ class Trader:
                     if best_bid + 1 <= acceptable_price:
                         print("BUY", str(-best_ask_volume) + "x", best_bid + 1)
                         orders.append(Order(product, best_bid + 1, int(np.minimum(-best_ask_volume,legal_buy_vol))))
+
+
+
+
+##########################################################################################################################################
                 # Add all the above the orders to the result dict
                 result[product] = orders
-        
+
         # String value holding Trader state data required. 
 		# It will be delivered as TradingState.traderData on next execution.
         traderData = "SAMPLE" 
